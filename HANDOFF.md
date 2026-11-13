@@ -15,6 +15,11 @@ tracks himself; confirmation email + portal link arrived.
   kit spec (yuema137/siderius-hackathon, SPEC.md v1.0.0): `TASK_CARD.md` (9
   headings), `data_source.json`, `fetch_data.py`, `task/` (SIDERIUS package),
   `baseline/` (logreg, skops, `baseline_result.json`).
+- Repo: https://github.com/andrewlee23023-maker/galileo-tcr-epitope
+  (public). `train.csv` is stored there as 10 shards
+  (`siderius_package/data/train.csv.00.part` … `.09.part`) — reassemble after
+  cloning with `cat train.csv.?? .part > train.csv` and verify md5
+  `cd53b10080cda95dd762b0c77e0bcaea`. `test_labels.csv` is NOT in the repo.
 - Deterministic checker: **every step PASSES except 2a** (placeholder
   `ZENODO_RECORD_ID`). Report: `check-report.json`. Zip built: 132,434 bytes,
   sha256 `032b1595082d0365caba8ea1265bacec3a756cbb7377ab169377b7239302a1c5`.

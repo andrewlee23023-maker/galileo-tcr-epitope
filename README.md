@@ -18,7 +18,7 @@ checker passes every step except 2a, which needs the Zenodo record (see
 | `HANDOFF.md` | **Start here if you are continuing this work.** Current state, open items, exact commands, gotchas. |
 | `submission/tcr-epitope-heldout/TASK_CARD.md` | The nine-section challenge brief (question, design, data, evaluation, baseline, novelty, difficulty, leakage risks, contact). |
 | `submission/tcr-epitope-heldout/` | **The submission.** Kit-spec layout: `TASK_CARD.md`, `data_source.json`, `fetch_data.py`, `task/` (SIDERIUS package), `baseline/` (logreg + `baseline_result.json`). |
-| `siderius_package/` | The build draft the submission was derived from (task.yaml, workflow.py, llm.json, declared/, plugins/, data/, evaluation/, baseline/). |
+| `siderius_package/` | The build draft the submission was derived from (task.yaml, workflow.py, llm.json, declared/, plugins/, data/, evaluation/, baseline/). **Note:** `siderius_package/data/train.csv` is stored as 10 shards (`train.csv.00.part` … `train.csv.09.part`, ~1 MB each) because of a per-push size limit — reassemble with `cat train.csv.??.part > train.csv` (see "Data" below) and verify the md5. |
 | `*.py`, `SCHEMA.md`, `PIPELINE.md`, `sample_data.csv`, `data/splits/` | The data pipeline: IEDB download → normalisation → splits → baselines → evaluation → leakage demo. `RUN_LOG.md` is the full run log. |
 | `SUBMISSION_CHECKLIST.md` | Pre-submission checklist. |
 | `check-report.json` | Latest deterministic checker report. |
@@ -79,6 +79,18 @@ Processed files in `siderius_package/data/`: `train.csv` (61,585 rows),
 `validation.csv` (3,042), `test_inputs.csv` (2,876, no labels). The same three
 files will be published on Zenodo for the submission (see
 `submission/.../data_source.json` for sizes and md5s).
+
+`train.csv` is stored in this repo as 10 shards (`train.csv.00.part` …
+`train.csv.09.part`) because a single 9.7 MB file exceeds the per-push size
+limit of the GitHub upload. Reassemble it after cloning:
+
+```bash
+cd siderius_package/data
+cat train.csv.00.part train.csv.01.part train.csv.02.part train.csv.03.part \
+  train.csv.04.part train.csv.05.part train.csv.06.part train.csv.07.part \
+  train.csv.08.part train.csv.09.part > train.csv
+md5sum train.csv   # must print cd53b10080cda95dd762b0c77e0bcaea
+```
 
 ## License
 
