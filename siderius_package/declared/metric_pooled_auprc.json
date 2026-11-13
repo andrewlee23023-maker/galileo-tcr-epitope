@@ -1,0 +1,1 @@
+{"aggregation":"average_precision_over_all_validation_rows_pooled","direction":"higher","id":"pooled_auprc","references":[],"scoreability":{"contract_id":"deliverable_presence"},"transform":null,"transform_params":{}}

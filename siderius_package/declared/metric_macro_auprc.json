@@ -1,0 +1,1 @@
+{"aggregation":"mean_per_epitope_average_precision_over_validation_rows","direction":"higher","id":"macro_auprc","references":[],"scoreability":{"contract_id":"deliverable_presence"},"transform":null,"transform_params":{}}

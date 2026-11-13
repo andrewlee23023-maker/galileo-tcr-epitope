@@ -1,0 +1,301 @@
+{
+  "failed_steps": [
+    "2a"
+  ],
+  "folder": "tcr-epitope-heldout",
+  "kit_version": "1.0.0",
+  "siderius": {
+    "git_revision": "5ccb436f88e64d49ed169e25ea769f65b5230dc6",
+    "path": "/home/hatch/workspace/siderius-checkout",
+    "version": "1.1.0"
+  },
+  "skipped_required_steps": [],
+  "steps": [
+    {
+      "details": {
+        "files": 24,
+        "folder": "tcr-epitope-heldout",
+        "notes": [
+          "data_source.json uses the placeholder record id ZENODO_RECORD_ID; step 2a fails until it is replaced"
+        ],
+        "problems": [],
+        "zip_bytes": 132434
+      },
+      "id": "1",
+      "name": "package",
+      "reason": "layout, sizes, file types, card and JSON schemas are valid",
+      "status": "PASS"
+    },
+    {
+      "details": {},
+      "id": "2a",
+      "name": "zenodo_record",
+      "reason": "zenodo_record_id is the placeholder ZENODO_RECORD_ID; publish the data on Zenodo and fill in the id and DOI",
+      "status": "FAIL"
+    },
+    {
+      "details": {
+        "command": [
+          "/home/hatch/workspace/siderius-checkout/.venv/bin/python",
+          "/home/hatch/workspace/goals/galileo-challenge/files/track1-tcr-epitope/submission/tcr-epitope-heldout/fetch_data.py",
+          "--output_dir",
+          "/home/hatch/workspace/.tmp-check/track1-check-3o09a7ap/processed_data",
+          "--source_dir",
+          "/home/hatch/workspace/goals/galileo-challenge/files/track1-tcr-epitope/siderius_package/data"
+        ],
+        "output_tail": "verified 3 file(s) against data_source.json\nwrote /home/hatch/workspace/.tmp-check/track1-check-3o09a7ap/processed_data/train.csv\nwrote /home/hatch/workspace/.tmp-check/track1-check-3o09a7ap/processed_data/validation.csv\ntest_inputs.csv verified but not written to the data folder (held-out test)\nData ready in /home/hatch/workspace/.tmp-check/track1-check-3o09a7ap/processed_data",
+        "processed_files": [
+          "train.csv",
+          "validation.csv"
+        ],
+        "source_dir": "/home/hatch/workspace/goals/galileo-challenge/files/track1-tcr-epitope/siderius_package/data",
+        "verified_files": 3
+      },
+      "id": "2b",
+      "name": "data_files",
+      "reason": "fetch_data.py processed the --data_dir files: 2 file(s) in the data folder",
+      "status": "PASS"
+    },
+    {
+      "details": {
+        "git_revision": "5ccb436f88e64d49ed169e25ea769f65b5230dc6",
+        "minimum": "v1.1.0",
+        "path": "/home/hatch/workspace/siderius-checkout",
+        "version": "1.1.0"
+      },
+      "id": "3.0",
+      "name": "siderius_version",
+      "reason": "SIDERIUS 1.1.0 at 5ccb436f88e6 includes v1.1.0",
+      "status": "PASS"
+    },
+    {
+      "details": {
+        "add_task": {
+          "command": [
+            "/home/hatch/workspace/siderius-checkout/.venv/bin/python",
+            "-m",
+            "tools.candidate_console",
+            "add-task",
+            "--config",
+            "/home/hatch/workspace/.tmp-check/track1-check-3o09a7ap/siderius/project/siderius_workspace/settings/console.json",
+            "--manifest",
+            "/home/hatch/workspace/.tmp-check/track1-check-3o09a7ap/siderius/project/siderius_workspace/tasks/tcr-epitope-heldout/task.yaml",
+            "--task-id",
+            "tcr-epitope-heldout",
+            "--no-gpu"
+          ],
+          "output_tail": "candidate_devices: none (--no-gpu)\nAdded task tcr-epitope-heldout to /home/hatch/workspace/.tmp-check/track1-check-3o09a7ap/siderius/project/siderius_workspace/settings/console.json:\n{\n  \"task_id\": \"tcr-epitope-heldout\",\n  \"label\": \"tcr-epitope-heldout\",\n  \"task_manifest\": \"/home/hatch/workspace/.tmp-check/track1-check-3o09a7ap/siderius/project/siderius_workspace/tasks/tcr-epitope-heldout/task.yaml\",\n  \"task_read_only\": [\n    \"/home/hatch/workspace/.tmp-check/track1-check-3o09a7ap/siderius/project/siderius_workspace/tasks/tcr-epitope-heldout\"\n  ],\n  \"preparation_timeout_seconds\": 300.0,\n  \"candidate_timeout_seconds\": 3600.0,\n  \"candidate_network\": true,\n  \"candidate_devices\": [],\n  \"candidate_environment_names\": [\n    \"OPENAI_API_KEY\"\n  ]\n}\nConsole address: http://127.0.0.1:8740\nAccess token file: /home/hatch/workspace/.tmp-check/track1-check-3o09a7ap/siderius/project/siderius_workspace/settings/console-token\n  The console asks for this token when you connect, on this machine or remotely.\n  Show it with: cat /home/hatch/workspace/.tmp-check/track1-check-3o09a7ap/siderius/project/siderius_workspace/settings/console-token\n  On this machine: open the console address in your browser.\n  On a remote server: first run on your own computer\n    ssh -N -L 127.0.0.1:8740:127.0.0.1:8740 YOUR_HOST\n  then open the console address there.\nRestart the console to load the new task.",
+          "returncode": 0,
+          "seconds_limit": 600
+        },
+        "bwrap": "not installed",
+        "check": {
+          "command": [
+            "/home/hatch/workspace/siderius-checkout/.venv/bin/python",
+            "-m",
+            "tools.candidate_console",
+            "check",
+            "--config",
+            "/home/hatch/workspace/.tmp-check/track1-check-3o09a7ap/siderius/project/siderius_workspace/settings/console.json"
+          ],
+          "output_tail": "Console address: http://127.0.0.1:8740\nAccess token file: /home/hatch/workspace/.tmp-check/track1-check-3o09a7ap/siderius/project/siderius_workspace/settings/console-token\n  The console asks for this token when you connect, on this machine or remotely.\n  Show it with: cat /home/hatch/workspace/.tmp-check/track1-check-3o09a7ap/siderius/project/siderius_workspace/settings/console-token\n  On this machine: open the console address in your browser.\n  On a remote server: first run on your own computer\n    ssh -N -L 127.0.0.1:8740:127.0.0.1:8740 YOUR_HOST\n  then open the console address there.",
+          "returncode": 0,
+          "seconds_limit": 600
+        },
+        "data": "processed data from step 2b",
+        "init": {
+          "command": [
+            "/home/hatch/workspace/siderius-checkout/.venv/bin/python",
+            "-m",
+            "tools.candidate_console",
+            "init",
+            "--workspace",
+            "/home/hatch/workspace/.tmp-check/track1-check-3o09a7ap/siderius/project",
+            "--credential-file",
+            "/home/hatch/workspace/.tmp-check/track1-check-3o09a7ap/siderius/credentials.json"
+          ],
+          "output_tail": "Workspace configuration: /home/hatch/workspace/.tmp-check/track1-check-3o09a7ap/siderius/project/siderius_workspace/settings/console.json\nConsole address: http://127.0.0.1:8740\nAccess token file: /home/hatch/workspace/.tmp-check/track1-check-3o09a7ap/siderius/project/siderius_workspace/settings/console-token\n  The console asks for this token when you connect, on this machine or remotely.\n  Show it with: cat /home/hatch/workspace/.tmp-check/track1-check-3o09a7ap/siderius/project/siderius_workspace/settings/console-token\n  On this machine: open the console address in your browser.\n  On a remote server: first run on your own computer\n    ssh -N -L 127.0.0.1:8740:127.0.0.1:8740 YOUR_HOST\n  then open the console address there.",
+          "returncode": 0,
+          "seconds_limit": 600
+        },
+        "workspace": "/home/hatch/workspace/.tmp-check/track1-check-3o09a7ap/siderius/project/siderius_workspace"
+      },
+      "id": "3a",
+      "name": "siderius_admission",
+      "reason": "init, add-task --manifest --task-id tcr-epitope-heldout --no-gpu and check accepted the task (note: bubblewrap not installed; SIDERIUS runs need it, these commands do not)",
+      "status": "PASS"
+    },
+    {
+      "details": {
+        "command": [
+          "/home/hatch/workspace/siderius-checkout/.venv/bin/python",
+          "-I",
+          "-c",
+          "<compose script>",
+          "/home/hatch/workspace/.tmp-check/track1-check-3o09a7ap/siderius/project/siderius_workspace/tasks/tcr-epitope-heldout/task.yaml"
+        ],
+        "composition": {
+          "primary_metric": {
+            "direction": "higher",
+            "id": "macro_auprc"
+          },
+          "secondary_metrics": [
+            {
+              "direction": "higher",
+              "id": "pooled_auprc"
+            },
+            {
+              "direction": "higher",
+              "id": "macro_auroc"
+            }
+          ],
+          "semantic_fingerprint": "7c1b186701075e8b924ef91395db1ff6cd59084a3cd9eca97d31471d211e6b5e",
+          "task_data_path_id": "tcr_epitope_heldout",
+          "task_health": "declared"
+        },
+        "output_tail": "SUBMISSION_CHECK_RESULT {\"primary_metric\": {\"direction\": \"higher\", \"id\": \"macro_auprc\"}, \"secondary_metrics\": [{\"direction\": \"higher\", \"id\": \"pooled_auprc\"}, {\"direction\": \"higher\", \"id\": \"macro_auroc\"}], \"semantic_fingerprint\": \"7c1b186701075e8b924ef91395db1ff6cd59084a3cd9eca97d31471d211e6b5e\", \"task_data_path_id\": \"tcr_epitope_heldout\", \"task_health\": \"declared\"}"
+      },
+      "id": "3b",
+      "name": "siderius_composition",
+      "reason": "composed: primary metric macro_auprc (higher), 2 secondary, Health declared",
+      "status": "PASS"
+    },
+    {
+      "details": {
+        "final_model": {
+          "check": "skops archive; not loaded",
+          "path": "baseline/final_model.skops"
+        },
+        "framework": "sklearn",
+        "model_format": "skops",
+        "problems": []
+      },
+      "id": "4.0",
+      "name": "baseline_model",
+      "reason": "sklearn/skops: final model (no initial model for this framework) pass the format checks (header-only check, not loaded; 4a is the real load test)",
+      "status": "PASS"
+    },
+    {
+      "details": {
+        "python": "/home/hatch/workspace/.tmp-check/track1-check-3o09a7ap/baseline-env/venv/bin/python",
+        "requirements": [
+          "scikit-learn==1.7.2",
+          "skops==0.13.0"
+        ],
+        "resolved_versions": {
+          "numpy": "2.4.3",
+          "scikit-learn": "1.7.2",
+          "siderius": "siderius-1.1.0-py3-none-any.whl",
+          "skops": "0.13.0",
+          "torch": "2.10.0"
+        }
+      },
+      "id": "4.1",
+      "name": "baseline_environment",
+      "reason": "isolated venv with SIDERIUS (locked versions) and 2 pinned package(s)",
+      "status": "PASS"
+    },
+    {
+      "details": {
+        "command": [
+          "/home/hatch/workspace/.tmp-check/track1-check-3o09a7ap/baseline-env/venv/bin/python",
+          "/home/hatch/workspace/goals/galileo-challenge/files/track1-tcr-epitope/submission/tcr-epitope-heldout/baseline/run_baseline.py",
+          "evaluate",
+          "--data_dir",
+          "/home/hatch/workspace/.tmp-check/track1-check-3o09a7ap/processed_data",
+          "--model",
+          "/home/hatch/workspace/goals/galileo-challenge/files/track1-tcr-epitope/submission/tcr-epitope-heldout/baseline/final_model.skops",
+          "--output_dir",
+          "/home/hatch/workspace/.tmp-check/track1-check-3o09a7ap/baseline_evaluate"
+        ],
+        "comparison": [
+          {
+            "metric_id": "macro_auprc",
+            "reported": 0.4369476683173579,
+            "reproduced": 0.4369476683173579,
+            "tolerance": 0.0,
+            "within": true
+          },
+          {
+            "metric_id": "macro_auroc",
+            "reported": 0.4353005117364963,
+            "reproduced": 0.4353005117364963,
+            "tolerance": 0.0,
+            "within": true
+          },
+          {
+            "metric_id": "pooled_auprc",
+            "reported": 0.4581749881994889,
+            "reproduced": 0.4581749881994889,
+            "tolerance": 0.0,
+            "within": true
+          }
+        ],
+        "metrics": {
+          "macro_auprc": 0.4369476683173579,
+          "macro_auroc": 0.4353005117364963,
+          "pooled_auprc": 0.4581749881994889
+        },
+        "output_tail": "{\"evaluate_seconds\": 3.155, \"metrics\": {\"macro_auprc\": 0.4369476683173579, \"macro_auroc\": 0.4353005117364963, \"pooled_auprc\": 0.4581749881994889}}"
+      },
+      "id": "4a",
+      "name": "baseline_evaluate",
+      "reason": "evaluating the final model reproduces every reported metric within its tolerance",
+      "status": "PASS"
+    },
+    {
+      "details": {
+        "command": [
+          "/home/hatch/workspace/.tmp-check/track1-check-3o09a7ap/baseline-env/venv/bin/python",
+          "/home/hatch/workspace/goals/galileo-challenge/files/track1-tcr-epitope/submission/tcr-epitope-heldout/baseline/run_baseline.py",
+          "train",
+          "--data_dir",
+          "/home/hatch/workspace/.tmp-check/track1-check-3o09a7ap/processed_data",
+          "--seed",
+          "20261108",
+          "--output_dir",
+          "/home/hatch/workspace/.tmp-check/track1-check-3o09a7ap/baseline_retrain"
+        ],
+        "comparison": [
+          {
+            "metric_id": "macro_auprc",
+            "reported": 0.4369476683173579,
+            "reproduced": 0.4369476683173579,
+            "tolerance": 0.0,
+            "within": true
+          },
+          {
+            "metric_id": "macro_auroc",
+            "reported": 0.4353005117364963,
+            "reproduced": 0.4353005117364963,
+            "tolerance": 0.0,
+            "within": true
+          },
+          {
+            "metric_id": "pooled_auprc",
+            "reported": 0.4581749881994889,
+            "reproduced": 0.4581749881994889,
+            "tolerance": 0.0,
+            "within": true
+          }
+        ],
+        "metrics": {
+          "macro_auprc": 0.4369476683173579,
+          "macro_auroc": 0.4353005117364963,
+          "pooled_auprc": 0.4581749881994889
+        },
+        "output_tail": "{\"metrics\": {\"macro_auprc\": 0.4369476683173579, \"macro_auroc\": 0.4353005117364963, \"pooled_auprc\": 0.4581749881994889}, \"train_seconds\": 53.924}"
+      },
+      "id": "4b",
+      "name": "baseline_retrain",
+      "reason": "retraining with seed 20261108 reproduces every reported metric within its tolerance",
+      "status": "PASS"
+    }
+  ],
+  "submission": "/home/hatch/workspace/goals/galileo-challenge/files/track1-tcr-epitope/submission/tcr-epitope-heldout",
+  "task_id": "tcr-epitope-heldout",
+  "task_id_kind": "local working id (the portal assigns the real id)",
+  "verdict": "FAIL",
+  "zip_bytes": 132434,
+  "zip_sha256": "032b1595082d0365caba8ea1265bacec3a756cbb7377ab169377b7239302a1c5"
+}

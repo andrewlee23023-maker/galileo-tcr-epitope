@@ -1,0 +1,14 @@
+test_labels.csv
+*.skops
+__pycache__/
+*.pyc
+.venv/
+data/airr/
+data/tcr_full_v3.xlsx
+data/airr_full.zip
+data/normalised_real.csv
+data/splits_real/
+data_check/
+runs/
+runs_real/
+*.muse-github-snapshot-sync.json*

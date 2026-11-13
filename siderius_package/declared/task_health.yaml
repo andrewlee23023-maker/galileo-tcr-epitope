@@ -1,0 +1,42 @@
+# Health: checks that decide whether a trained model's predictions are usable
+# at all, separately from how well they score. Both checks below are generic
+# framework checks; this package supplies only the view they read
+# (plugins/_tcr_health_views.py, p_binding >= 0.5 -> class 1) and the facts
+# and thresholds. Start almost everything recording, per the SIDERIUS guide;
+# only the single-class collapse check is blocking.
+
+facts:
+  # How the predictions are encoded: one class index per row.
+  encoding_family: class_index
+  symbol_cardinality: 2
+
+plugins:
+  - kind: file
+    ref: ../plugins/_tcr_health_views.py
+
+providers:
+  - provider_id: tcr_epitope.predicted_classes
+
+roster:
+  # Blocking: a model that fails this check is not a valid result, whatever
+  # its score.
+  - gate_id: predicts_more_than_one_class
+    check: categorical_distinct_symbols
+    disposition: blocking
+    parameters:
+      min_distinct_symbols: 2
+    reason: >-
+      A classifier that predicts a single class for every validation row has
+      collapsed; its score says nothing about the features. On this task a
+      constant predictor scores at chance on held-out epitopes by design.
+  # Recording: measured and shown with each result, never blocking.
+  - gate_id: dominant_class_fraction
+    check: categorical_dominant_fraction
+    disposition: recording
+    parameters:
+      # The validation file is 50% positive, so 0.8 only flags a model that
+      # over-predicts one class far beyond its prevalence.
+      max_dominant_fraction: 0.8
+    reason: >-
+      Predicting one class for most validation rows is an early sign of
+      collapse toward the majority class.

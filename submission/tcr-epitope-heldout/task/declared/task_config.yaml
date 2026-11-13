@@ -1,0 +1,46 @@
+# What the agents are told about the task, and the model's input and output.
+
+task_description: |
+  Predict whether a given T-cell receptor (TCR) binds a given peptide epitope
+  presented by MHC, from sequence alone. Each row is one TCR-epitope pair:
+  CDR3-alpha and/or CDR3-beta, an epitope peptide (8-15 amino acids) and an
+  MHC allele. The main score is macro-averaged AUPRC (mean per-epitope
+  average precision) on the validation file, whose epitopes are unseen in
+  training; higher is better. A separate final test file (test_inputs.csv /
+  test_labels.csv) is kept outside the research loop and is never used for
+  model selection. The scientific question is generalisation to unseen
+  epitopes — the case that matters for a new pathogen, a new tumour
+  neoantigen, or a new CAR-T target — not memorisation of TCRs seen for a
+  familiar epitope. Shipped baselines show additive 3-mer features are at or
+  below chance on truly unseen epitopes (logistic regression macro AUPRC
+  0.488, k-NN 0.434 after epitope-similarity decontamination); beating them
+  requires learning TCR x epitope interaction.
+
+forward_contract:
+  segmentation_applicability: not_applicable
+  model_io:
+    input:
+      axes:
+        - {role: batch, dimension: {symbolic: "B"}}
+        # 7,035 3-mer counts + 145 MHC one-hot features (declared/kmer_vocab.json).
+        - {dimension: {fixed: 7180}}
+      dtype: {admissible: ["float32"]}
+    output:
+      axes:
+        - {role: batch, dimension: {symbolic: "B"}}
+        - {role: class, dimension: {fixed: 2}}
+      dtype: {admissible: ["float32"]}
+  input_description: "a batch of 7180 numeric features per row: 3-mer counts over CDR3-alpha, CDR3-beta and epitope, plus a one-hot MHC allele"
+  output_description: "one logit per class, in the order of `classes` in task.yaml ([0, 1]); class 1 is binding"
+  task_type: "classification"
+  output_head_note: >-
+    Output exactly [B, 2] logits. Do not apply softmax inside the model.
+  task_note: >-
+    Sequence-pair classification with no spatial or temporal structure in the
+    feature vector; small MLPs and linear models are appropriate as
+    reference models only. The hard part is interaction between the TCR and
+    epitope parts of the input: additive features cannot distinguish a TCR
+    that binds this epitope from the same TCR binding a different epitope.
+    Models that embed the two sequences separately and combine them
+    (cross-attention, bilinear pooling, pretrained protein embeddings) are
+    the intended direction.

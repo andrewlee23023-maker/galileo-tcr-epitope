@@ -1,0 +1,103 @@
+# Task package manifest: TCR-epitope binding prediction, epitope-held-out.
+# Every path below is relative to this folder, so the folder can be copied
+# anywhere (for the console: siderius_workspace/tasks/<id>/).
+#
+# Adapted from the canonical SIDERIUS CSV classification template
+# (yuema137/SIDERIUS, examples/task_templates/csv_classification/task.yaml)
+# and the composition reference (docs/reference/task-composition.md).
+# Verified against the canonical repo on Nov 8, 2026 — do not take field
+# shapes from the ad1896git fork.
+#
+# Data: IEDB AIRR export, human TRA/TRB, peptidic epitopes 8-15 AA.
+# 61,585 train rows (2,500 epitopes) / 3,042 validation rows (2 epitopes) /
+# 2,876 test rows (2 epitopes), all ~50% positive. Test labels are
+# evaluator-only: ../evaluation/test_labels.csv (submission root, not in
+# task/ and NOT in data/). They must not be copied into a solver-visible
+# folder and are NOT published on Zenodo. See ../SPLIT_EVIDENCE.md.
+
+task_data_path:
+  file: plugins/_tcr_task.py
+  symbol: TcrEpitopeTaskDataPath
+  id: tcr_epitope_heldout
+  config:
+    train_file: train.csv
+    validation_file: validation.csv
+    label_column: label
+    classes: [0, 1]
+    id_column: row_id
+    # Resolved against this manifest's directory before construction.
+    vocab_file: {ref: ./declared/kmer_vocab.json}
+
+dataset_profile:
+  config: declared/dataset_profile.json
+
+metric:
+  declaration: declared/metric_macro_auprc.json
+  implementation:
+    file: plugins/_tcr_metrics.py
+    symbol: MacroAuprcMetric
+
+secondary_metrics:
+  - declaration: declared/metric_pooled_auprc.json
+    implementation:
+      file: plugins/_tcr_metrics.py
+      symbol: PooledAuprcMetric
+  - declaration: declared/metric_macro_auroc.json
+    implementation:
+      file: plugins/_tcr_metrics.py
+      symbol: MacroAurocMetric
+
+# Tell every agent what the score means. Models are ranked by the primary
+# metric above (macro AUPRC); the secondaries are observational only.
+evaluation:
+  components:
+    - kind: metric
+      id: macro_auprc
+      metric: macro_auprc
+      meaning: Mean per-epitope average precision on validation.csv; each held-out epitope counts equally, so a model that only works on the easy epitope does not win.
+      units: fraction (0 to 1), mean over epitopes
+      range: {lower: 0.0, upper: 1.0}
+    - kind: metric
+      id: pooled_auprc
+      metric: pooled_auprc
+      meaning: Average precision over all validation rows pooled; reported for comparison, not selection.
+      units: fraction (0 to 1)
+      range: {lower: 0.0, upper: 1.0}
+    - kind: metric
+      id: macro_auroc
+      metric: macro_auroc
+      meaning: Mean per-epitope AUROC on validation.csv; secondary only.
+      units: fraction (0 to 1), mean over epitopes
+      range: {lower: 0.0, upper: 1.0}
+  selection:
+    kind: primary
+
+objective:
+  config:
+    loss_type: ce
+    reduction: mean
+
+task_health:
+  config: declared/task_health.yaml
+
+interpretation_blocks:
+  none: true
+
+deliverable:
+  prefix: tcr_predictions
+  extension: .json
+  index_width: 4
+
+task_config:
+  config: declared/task_config.yaml
+
+# Limited parameters: the agents must keep these values inside the rule.
+parameter_rules:
+  train_config.batch_size:
+    range: {min: 1, max: 32}
+  model_config.hidden_dim:
+    allowed: [32, 64, 128, 256]
+
+model_plugins:
+  dir: plugins
+  require: [tcr_reference_mlp]
