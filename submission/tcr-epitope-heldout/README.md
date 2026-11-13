@@ -27,7 +27,7 @@ Source: Immune Epitope Database (IEDB), https://www.iedb.org — AIRR export `ai
 
 - **Train:** 61,585 rows, 2,500 epitopes, 49.6% positive (capped 200/epitope).
 - **Validation:** 3,042 rows, epitopes `MPASWVMRI` and `VLWAHGFEL`, 50.0% positive. Used for model selection. Never tune on test.
-- **Test:** 2,876 rows, epitopes `SPRWYFYYL` and `TFEYVSQPFLMDLE`, 50.0% positive. Inputs in `data/test_inputs.csv` (no labels); labels evaluator-only in `evaluation/test_labels.csv`.
+- **Test:** 2,876 rows, epitopes `SPRWYFYYL` and `TFEYVSQPFLMDLE`, 50.0% positive. Inputs in `data/test_inputs.csv` (no labels); labels are evaluator-only, held by the task author and not included in this submission.
 - **Epitope-disjoint by exact sequence, plus epitope-similarity decontamination:** any train epitope that is a substring of, within edit distance ≤ 2 of, or sharing ≥ 0.60 3-mer Jaccard with a held-out epitope was removed — 6 epitopes, 2,604 rows. Exact-sequence splitting alone was **not** enough (see below).
 - **CDR3 decontamination was considered and deliberately NOT applied:** synthetic negatives are defined by reusing a train TCR with a new epitope, so Hamming ≤ 1 CDR3 decontamination drops 1,599/2,876 test rows (55.6%) — mostly the synthetic negatives the task is built on. The epitope-disjoint split is the leakage defence; cross-epitope CDR3 reuse is the signal, not a leak. Full reasoning and the failing-counterexample check are in `SPLIT_EVIDENCE.md`.
 - **Deviation from the original outline, stated plainly:** the outline suggested 15–25 test epitopes with 20–50 positives each, and keeping synthetic negatives out of the test set. The real long tail cannot support that at stable sizes, and real negatives (916 total) cannot support a binary test set at all. The package therefore uses 2 test + 2 validation epitopes at 300–800 positives each, with per-epitope-balanced synthetic negatives **in** the test set, labelled in the data card. Shrinking the held-out set rather than padding it with near-duplicates was the outline's own fallback rule.
@@ -59,7 +59,6 @@ tcr-epitope-heldout/
   fetch_data.py        # download + verify + prepare data from Zenodo
   task/                # SIDERIUS task package (task.yaml, declared/, plugins/)
   baseline/            # run_baseline.py, final_model.skops, requirements.txt, baseline_result.json
-  evaluation/          # test_labels.csv (EVALUATOR-ONLY — not on Zenodo, not in the run data folder)
   README.md            # this file
   SPLIT_EVIDENCE.md    # required split evidence (independence, membership, counterexample)
   CITATION.md          # IEDB citation + licence

@@ -20,7 +20,8 @@ This script writes the layout that ``task/task.yaml`` reads:
 ``test_inputs.csv`` is verified (checksum) but NOT written to the data
 folder: it is the held-out test input, and nothing in the research loop may
 read it. Test labels are not on Zenodo at all; they are evaluator-only
-(``evaluation/test_labels.csv`` in the submission) and are never published.
+(held by the task author, not included in this submission) and are never
+published.
 
 Re-running is safe: an identical output file is kept; a different one is
 refused and left unchanged. Exit status 0 on success, 2 on any refusal.

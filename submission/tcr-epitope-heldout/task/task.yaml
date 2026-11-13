@@ -11,8 +11,8 @@
 # Data: IEDB AIRR export, human TRA/TRB, peptidic epitopes 8-15 AA.
 # 61,585 train rows (2,500 epitopes) / 3,042 validation rows (2 epitopes) /
 # 2,876 test rows (2 epitopes), all ~50% positive. Test labels are
-# evaluator-only: ../evaluation/test_labels.csv (submission root, not in
-# task/ and NOT in data/). They must not be copied into a solver-visible
+# evaluator-only and held by the task author: not in this submission, not in
+# task/ and NOT in data/. They must not be copied into a solver-visible
 # folder and are NOT published on Zenodo. See ../SPLIT_EVIDENCE.md.
 
 task_data_path:

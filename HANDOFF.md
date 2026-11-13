@@ -165,3 +165,25 @@ evaluation loophole) is the fallback path. Track 2 compute: up to 2 h H100 per
 team, first-come first-served by registration time; $30 LLM credits are
 in-person only; bring-your-own compute/API keys allowed. **Cannot challenge
 his own task** (public release) — pick a different one.
+
+## 7. Update — Nov 13, 2026 (moved to Andrew's Windows machine)
+
+- Working copy: `C:\Users\andre\Galileo Hackathon Track 1` (clone of the repo,
+  `core.autocrlf=false` + `.gitattributes` `* -text`). **CRLF hazard:** with
+  autocrlf on, the CSVs check out with CRLF and every md5 is wrong. Upload to
+  Zenodo only the LF files in `siderius_package/data/` (md5s verified there).
+- Checker runs in **WSL Ubuntu** (step 3a requires Linux): `~/workspace/`
+  holds `siderius-checkout` (v1.1.0, 5ccb436; venv pinned to sklearn 1.7.2,
+  numpy 2.4.3, skops 0.13.0, uv 0.13.7), `siderius-hackathon-kit`, and a
+  mirror `galileo-tcr-epitope`. Sync the Windows submission folder into the
+  mirror with rsync before checking.
+- **Tolerance changed 0.0 -> 1e-4** in `baseline_result.json` (metrics
+  untouched). Same-seed retrain on this CPU gave macro_auprc 0.4369457 (24
+  threads) / 0.4369465 (1 or 4 threads) vs 0.4369477 reported: lbfgs/BLAS
+  floating-point drift up to ~3e-6. Tolerance 0 would fail 4a/4b on reviewer
+  hardware. SPEC section 4.2 allows tolerance for thread-count drift.
+- `final_model.skops` regenerated on this machine (it is gitignored).
+- Checker (local data, `--retrain`): all PASS except 2a placeholder. Zip
+  113,935 bytes, sha256 5e486ee9... (pre-Zenodo, not final).
+- Docs no longer claim test labels are in the submission (`evaluation/` was
+  never in the zip). `test_labels.csv` is NOT on this machine or in the repo.
