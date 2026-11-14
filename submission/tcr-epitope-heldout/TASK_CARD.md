@@ -12,7 +12,7 @@ Splits are by epitope, not by row. Train: 61,585 rows, 2,500 epitopes. Validatio
 
 ## Data
 
-- DOI: 10.5281/zenodo.ZENODO_RECORD_ID
+- DOI: 10.5281/zenodo.24212820
 - Size: 10,655,356 bytes total on Zenodo, 3 files — train.csv 9,736,175 bytes (61,585 rows), validation.csv 458,980 bytes (3,042 rows), test_inputs.csv 460,201 bytes (2,876 rows, no labels)
 - License: cc-by-4.0
 - Access: public

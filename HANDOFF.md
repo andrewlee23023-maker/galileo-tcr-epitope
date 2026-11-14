@@ -187,3 +187,11 @@ his own task** (public release) — pick a different one.
   113,935 bytes, sha256 5e486ee9... (pre-Zenodo, not final).
 - Docs no longer claim test labels are in the submission (`evaluation/` was
   never in the zip). `test_labels.csv` is NOT on this machine or in the repo.
+- **Nov 13 final:** portal task `t1-007`; Zenodo record 24212820
+  (DOI 10.5281/zenodo.24212820; an earlier record 24212768 mistakenly held the
+  synthetic sample and is not used). Checker with `--download --retrain
+  --task_id t1-007`: **PASS**, exit 0. Final zip `dist/t1-007.zip` (gitignored),
+  113,903 bytes, sha256
+  `bdcf585c64786e1018a448c6692c2d65c3576fa39594e99774ecf3de2723fb07`.
+  Remaining: Andrew uploads it in the portal, ticks permit public release, and
+  checks the receipt sha256 matches.

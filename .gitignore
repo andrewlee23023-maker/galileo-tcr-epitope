@@ -13,3 +13,4 @@ runs/
 runs_real/
 *.muse-github-snapshot-sync.json*
 siderius_package/data/train.csv
+dist/
